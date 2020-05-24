@@ -7,14 +7,14 @@ import {
   } from "react-router-dom";
 import store from './redux/store';
 import './App.css';
-import Home from './ui/components/Home';
+import HomeContainer from './containers/HomeContainer';
 
 function App() {
     return (
         <Provider store={store}>
             <Router>
                 <Switch>
-                    <Route exact path="/" component={Home} />
+                    <Route exact path="/" component={HomeContainer} />
                 </Switch>
             </Router>
         </Provider>

@@ -1,65 +1,43 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getAllPokemons, getPokemonDetails } from '../../redux/actions';
-import axios from 'axios';
+import './styles/Home.scss';
 import PokeCard from './PokeCard';
+import ShowMorePokemonsContainer from '../../containers/ShowMorePokemonsContainer';
+import Loader from './Loader';
 
 class Home extends Component {
-    constructor(props) {
-        super(props);
-    }
     componentDidMount() {
-        this.props.getAllPokemons();
-        this.getDatilsOfPokemon()
-            .then(response => {
-                console.log(response);
-                
-                response.results.map(pokemon => {
-                    this.props.getPokemonDetails(pokemon.url);
-                })
-            })
-    }
-
-    async getDatilsOfPokemon () {
-        try {
-            let response = await axios.get('https://pokeapi.co/api/v2/pokemon');
-            return response.data;
-        } catch (error) {
-            console.log(error);
+        if(!this.props.allPokemon.length) {
+            this.props.getAllPokemons();
         }
-        
     }
+    
     render() {
-        const { allPokemon, pokemonDetail } = this.props;
-       
-        return (
-            <section className="">
+        const { allPokemon, isLoadingPokemonList, errorFetchAllPokemon } = this.props;
+        if(errorFetchAllPokemon) {
+            return(
                 <div>
-                    <div>
+                    <h1 className="error-message">{errorFetchAllPokemon}</h1>
+                    <h2 className="error-message">Please reload the page</h2>
+                </div>
+            );
+        }
+        return (
+            <section className="pokecards-container">
+                <div className="inner-pokecards">
+                    <div className="wrapper-pokecards">
                         {
-                            allPokemon 
-                            ? allPokemon.map(pokemon => (
-                                <PokeCard key={pokemon.name} data={pokemon} />
+                            !isLoadingPokemonList
+                            ? allPokemon.map((pokemon, i) => (
+                                <PokeCard key={`${pokemon.name}-${i}`} data={pokemon} />
                             ))
-                            : 'Loading...'
+                            : <Loader />
                         }
                     </div>
+                    <ShowMorePokemonsContainer />
                 </div>
             </section>
         )
     }
 }
 
-export default connect(
-    state => {
-        return {
-            allPokemon: state.allPokemon,
-            nextPageUrl: state.nextPageUrl,
-            prevPageUrl: state.prevPageUrl,
-            currentPage: state.currentPage,
-            pokemonDetail: state.pokemonDetail,
-        }
-    }, {
-        getAllPokemons,
-        getPokemonDetails
-    })(Home);
+export default Home;

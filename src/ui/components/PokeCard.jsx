@@ -7,14 +7,10 @@ const PokeCard = ({ data, history }) => {
     const goToCharacterDetailsPage = () => {
         history.push(`characters/${data.id}`)
     }
-    console.log(data.name);
     
     return(
         <div style={styles} onClick={goToCharacterDetailsPage} className="card-container">
-            <div className="card-inner-container">
-                <figure>
-                    {/* <img src={data.image} alt="" /> */}
-                </figure>
+            <div className="card-inner">
                 <div className="character-name">
                     <h6>{data.name}</h6>
                 </div>

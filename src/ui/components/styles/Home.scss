@@ -1,0 +1,12 @@
+.pokecards-container {
+    padding: 4%;
+    .inner-pokecards {
+        .wrapper-pokecards {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+}
+.error-message {
+    text-align: center;
+}
