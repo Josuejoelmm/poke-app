@@ -22,8 +22,8 @@ class Home extends Component {
             );
         }
         return (
-            <section className="pokecards-container">
-                <div className="inner-pokecards">
+            <section className="pokecards-container flex">
+                <div className="inner-pokecards width-50 col-1">
                     <div className="wrapper-pokecards">
                         {
                             !isLoadingPokemonList
@@ -34,6 +34,11 @@ class Home extends Component {
                         }
                     </div>
                     <ShowMorePokemonsContainer />
+                </div>
+                <div className="width-50 col-2">
+                    <figure className="flex">
+                        <img src="https://via.placeholder.com/600x400" alt=""/>
+                    </figure>
                 </div>
             </section>
         )

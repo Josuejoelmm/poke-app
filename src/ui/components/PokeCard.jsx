@@ -5,8 +5,10 @@ import './styles/PokeCard.scss';
 const PokeCard = ({ data, history }) => {
     const styles = {cursor: 'pointer'}
     const goToCharacterDetailsPage = () => {
-        history.push(`characters/${data.id}`)
+        history.push(`pokemon/${data.url.substr(-2,1)}`)
     }
+    console.log(data);
+    
     
     return(
         <div style={styles} onClick={goToCharacterDetailsPage} className="card-container">

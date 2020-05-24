@@ -8,15 +8,20 @@ import {
 import store from './redux/store';
 import './App.css';
 import HomeContainer from './containers/HomeContainer';
+import PokemonDetails from './ui/components/PokemonDetails';
+import Layout from './ui/components/Layout';
 
 function App() {
     return (
         <Provider store={store}>
-            <Router>
-                <Switch>
-                    <Route exact path="/" component={HomeContainer} />
-                </Switch>
-            </Router>
+            <Layout>
+                <Router>
+                    <Switch>
+                        <Route exact path="/" component={HomeContainer} />
+                        <Route exact path="/pokemon/:Id" component={PokemonDetails} />
+                    </Switch>
+                </Router>
+            </Layout>
         </Provider>
     );
 }
