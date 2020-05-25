@@ -1,8 +1,8 @@
 .show-more-container {
     display: flex;
     justify-content: center;
+    margin-top: 20px;
     .show-more-pokemons {
-        width: 20%;
         cursor: pointer;
         color: #fff;
         background-color: #007bff;
@@ -25,4 +25,11 @@
         background-color: #0069d9;
         border-color: #0062cc;
      }
+    .show-more-pokemons:first-child {
+        margin-right: 20px;
+     }
+}
+.show-more-pokemons.disable {
+    opacity: 0.4;
+    pointer-events: none;
 }

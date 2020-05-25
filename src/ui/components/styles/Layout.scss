@@ -1,10 +1,20 @@
+@import '../../../utils/utils-style';
+.main-container, .main-inner {
+    display: flex;
+    flex: 1 1;
+    flex-direction: column;
+}
 .main-container {
     width: 100%;
-    background-color: red;
-    padding: 4% 0;
+    background-image: url(../../../images/main-bg-image.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     .main-inner {
         width: 85%;
+        max-width: $mainWidth;
+        height: 100%;
         margin: 0 auto;
-        background-color: green;
+        background-color: #B3B3B3;
     }
 }

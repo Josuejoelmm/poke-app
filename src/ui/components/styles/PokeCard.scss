@@ -1,29 +1,76 @@
 .card-container {
-    width: 33.33%;
     position: relative;
     display: flex;
     margin-bottom: 20px;
-    
+    width: 250px;
+    transition: all 0.5s ease;
     .wrapper-card {
         width: 100%;
         padding: 0 20px;
     }
     .card-inner {
+        font-family: 'Arial', sans-serif;
+        font-weight: bold;
+        letter-spacing: 1px;
         width: 100%;
         position: relative;
-        padding: 0 10%;
-    }
-    .character-name {
-        border-radius: 10px;
-        overflow: hidden;
-        background-color: rgb(226, 226, 226);
-        -webkit-box-shadow: 3px 9px 10px -9px rgb(0, 0, 0);
-        -moz-box-shadow: 3px 9px 10px -9px rgb(0, 0, 0);
-        box-shadow: 3px 9px 10px -9px rgb(0, 0, 0);
-        h6 {
-            font-size: 1rem;
-            margin: 0;
-            padding: 10px;
+        color: #ffffff;
+        border-radius: 6px;
+        background-color: #1A1A1A;
+        display: flex;
+        padding: 10px 56px 10px 7px;
+        .pokeball-icon {
+            min-width: 16px;
+            width: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            img {
+                height: auto;
+            }
+        }
+        .character-name {
+            display: flex;
+            align-items: center;
+            h6 {
+                font-size: 1rem;
+                margin: 0;
+                padding-left: 10px;
+            }
+        }
+        .pokemon-number {
+            position: absolute;
+            right: 5px;
+            top: -10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 55px;
+            height: 38px;
+            padding-top: 2px;
+            background: #1A1A1A;
+            border-radius: 6px;
+            border: 2px solid #b3b3b3;
+            font-size: 2em;
         }
     }
+}
+.card-container:hover {
+    transform: translateX(20px);
+}
+@media (max-width: 400px) {
+    .card-container {
+        width: 190px;
+        .card-inner {
+            .character-name {
+                h6 {
+                    font-size: 9px;
+                }
+            }
+            .pokemon-number {
+                font-size: 15px;
+            }
+        }  
+        
+    } 
 }

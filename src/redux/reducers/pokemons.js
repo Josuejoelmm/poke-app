@@ -2,6 +2,7 @@ import { actions } from '../actions';
 const initialState = {
     allPokemon: [],
     nextPageUrl: '',
+    prevPageUrl: null,
     pokemonsDetail: [],
     isLoadingPokemonList: true,
     isLoadingMorePokemon: false,
@@ -32,8 +33,9 @@ const pokemons = (state = initialState, action) => {
         case actions.FETCH_MORE_POKEMON + '_SUCCESS':
             return {
                 ...state,
-                allPokemon: [...state.allPokemon, ...action.payload.data.results],
+                allPokemon: [...action.payload.data.results],
                 nextPageUrl: action.payload.data.next,
+                prevPageUrl: action.payload.data.previous,
                 isLoadingMorePokemon: false
             }
         case actions.FETCH_POKEMON_DETAILS:

@@ -13,10 +13,10 @@ export function getAllPokemons() {
     }
 }
 
-export function showMorePokemons(nextPageUrl) {
+export function showMorePokemons(PageUrl) {
     return {
         type: actions.FETCH_MORE_POKEMON,
-        payload: axios.get(nextPageUrl)
+        payload: axios.get(PageUrl)
     }
 }
 

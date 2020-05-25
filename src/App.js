@@ -14,14 +14,14 @@ import Layout from './ui/components/Layout';
 function App() {
     return (
         <Provider store={store}>
-            <Layout>
-                <Router>
+            <Router>
+                <Layout>
                     <Switch>
                         <Route exact path="/" component={HomeContainer} />
                         <Route exact path="/pokemon/:Id" component={PokemonDetails} />
                     </Switch>
-                </Router>
-            </Layout>
+                </Layout>
+            </Router>
         </Provider>
     );
 }
