@@ -3,7 +3,6 @@ const initialState = {
     allPokemon: [],
     nextPageUrl: '',
     prevPageUrl: null,
-    pokemonsDetail: [],
     isLoadingPokemonList: true,
     isLoadingMorePokemon: false,
     errorFetchAllPokemon: ''
@@ -19,8 +18,6 @@ const pokemons = (state = initialState, action) => {
                 isLoadingPokemonList: false
             }
         case actions.FETCH_ALL_POKEMON + '_ERROR':
-            console.log(action.payload);
-            
             return {
                 ...state,
                 errorFetchAllPokemon: action.payload.message
@@ -37,11 +34,6 @@ const pokemons = (state = initialState, action) => {
                 nextPageUrl: action.payload.data.next,
                 prevPageUrl: action.payload.data.previous,
                 isLoadingMorePokemon: false
-            }
-        case actions.FETCH_POKEMON_DETAILS:
-            return {
-                ...state, 
-                pokemonsDetail: action.pokemonsDetails
             }
         default:
             return state;

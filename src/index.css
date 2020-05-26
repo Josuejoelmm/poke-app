@@ -19,7 +19,7 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-h6 {
+h6, .tab-name span {
     font-family: 'Arial', sans-serif;
     font-weight: bold;
     letter-spacing: 1px;
