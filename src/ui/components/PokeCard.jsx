@@ -9,9 +9,8 @@ const PokeCard = ({ data, index, history }) => {
     let extractNumber = data.url.match(myReg).join().replace('/','');
     
     const goToCharacterDetailsPage = () => {
-        history.push(`pokemon/${data.url.substr(-2,1)}`)
+        history.push(`pokemon/${extractNumber}`)
     }
-    console.log(extractNumber);
     
     return(
         <div style={styles} onClick={goToCharacterDetailsPage} className="card-container">

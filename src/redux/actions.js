@@ -5,6 +5,8 @@ export const actions = {
     FETCH_MORE_POKEMON: 'FETCH_MORE_POKEMON',
     FETCH_POKEMON_DETAILS: 'FETCH_POKEMON_DETAILS',
     FETCH_POKEMON_SPECIES: 'FETCH_POKEMON_SPECIES',
+    SET_ABILITIES: 'SET_ABILITIES',
+    CHANGE_LANGUAGE: 'CHANGE_LANGUAGE',
 }
 
 export function getAllPokemons() {
@@ -36,7 +38,16 @@ export function getPokemonSpecies(id, language) {
     }
 }
 
-export function filterSpeciesTextByLanguage(entries, language) {
-    let result = entries.filter(text => text.language.name == language);
-    return result[0].flavor_text;
+export function getPokemonAbilities(abilities) {
+    return {
+        type: actions.SET_ABILITIES,
+        abilities
+    }
+}
+
+export function changeLanguage(value) {
+    return {
+        type: actions.CHANGE_LANGUAGE,
+        value
+    }
 }
