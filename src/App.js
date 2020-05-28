@@ -6,22 +6,21 @@ import {
     Route
   } from "react-router-dom";
 import store from './redux/store';
-import './App.css';
 import HomeContainer from './containers/HomeContainer';
-import PokemonDetails from './ui/components/PokemonDetails';
+import PokemonDetailsContainer from './containers/PokemonDetailsContainer';
 import Layout from './ui/components/Layout';
 
 function App() {
     return (
         <Provider store={store}>
-            <Layout>
-                <Router>
+            <Router>
+                <Layout>
                     <Switch>
                         <Route exact path="/" component={HomeContainer} />
-                        <Route exact path="/pokemon/:Id" component={PokemonDetails} />
+                        <Route exact path="/pokemon/:Id" component={PokemonDetailsContainer} />
                     </Switch>
-                </Router>
-            </Layout>
+                </Layout>
+            </Router>
         </Provider>
     );
 }

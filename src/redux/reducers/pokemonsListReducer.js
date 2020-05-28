@@ -2,7 +2,7 @@ import { actions } from '../actions';
 const initialState = {
     allPokemon: [],
     nextPageUrl: '',
-    pokemonsDetail: [],
+    prevPageUrl: null,
     isLoadingPokemonList: true,
     isLoadingMorePokemon: false,
     errorFetchAllPokemon: ''
@@ -18,8 +18,6 @@ const pokemons = (state = initialState, action) => {
                 isLoadingPokemonList: false
             }
         case actions.FETCH_ALL_POKEMON + '_ERROR':
-            console.log(action.payload);
-            
             return {
                 ...state,
                 errorFetchAllPokemon: action.payload.message
@@ -32,14 +30,10 @@ const pokemons = (state = initialState, action) => {
         case actions.FETCH_MORE_POKEMON + '_SUCCESS':
             return {
                 ...state,
-                allPokemon: [...state.allPokemon, ...action.payload.data.results],
+                allPokemon: [...action.payload.data.results],
                 nextPageUrl: action.payload.data.next,
+                prevPageUrl: action.payload.data.previous,
                 isLoadingMorePokemon: false
-            }
-        case actions.FETCH_POKEMON_DETAILS:
-            return {
-                ...state, 
-                pokemonsDetail: action.pokemonsDetails
             }
         default:
             return state;

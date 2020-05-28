@@ -3,10 +3,31 @@
     .inner-pokecards {
         .wrapper-pokecards {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
         }
     }
+    .col-2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        figure {
+            img {
+                max-width: 250px;
+                min-width: 100px;
+            }
+        }
+    } 
 }
 .error-message {
     text-align: center;
+}
+@media (max-width: 768px) {
+    .pokecards-container {
+        .row {
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+    }
 }

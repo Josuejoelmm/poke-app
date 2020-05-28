@@ -1,4 +1,10 @@
 import { combineReducers  } from 'redux';
-import pokemons from './pokemons';
+import pokemons from './pokemonsListReducer';
+import detailsCharacter from './detailsCharacterReducer';
 
-export default combineReducers({ pokemons });
+export default combineReducers(
+    {
+        pokemons,
+        detailsCharacter 
+    }
+);

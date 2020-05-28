@@ -5,6 +5,7 @@ import { showMorePokemons } from '../redux/actions';
 export default connect(
     state => ({
         nextPageUrl: state.pokemons.nextPageUrl,
+        prevPageUrl: state.pokemons.prevPageUrl,
         isLoadingMorePokemon: state.pokemons.isLoadingMorePokemon
     }),
     { showMorePokemons }
