@@ -6,7 +6,6 @@ import {
     Route
   } from "react-router-dom";
 import store from './redux/store';
-import './App.css';
 import HomeContainer from './containers/HomeContainer';
 import PokemonDetailsContainer from './containers/PokemonDetailsContainer';
 import Layout from './ui/components/Layout';

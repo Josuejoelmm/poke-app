@@ -1,11 +1,10 @@
 import { actions } from '../actions';
-import { filterSpeciesTextByLanguage } from '../../utils/utilsFunctions';
+import { filterTextByLanguage } from '../../utils/utilsFunctions';
 
 const initialState = {
     pokemonsDetail: null,
     errorFetch: '',
     isLoading: false,
-    isLoadingSpeciesText: false,
     language: 'en',
     abilities: [],
     esSpeciesText: null,
@@ -13,7 +12,7 @@ const initialState = {
     types: []
 }
 
-const detailsCharacters = (state = initialState, action) => {
+const detailsCharacter = (state = initialState, action) => {
     switch(action.type) {
         case actions.FETCH_POKEMON_DETAILS + '_START':
             return {
@@ -29,27 +28,20 @@ const detailsCharacters = (state = initialState, action) => {
         case actions.FETCH_POKEMON_DETAILS + '_ERROR':
             return {
                 ...state,
-                errorFetch: action.payload.message,
+                errorFetch: action.payload.message + ", Please re-load to try again.",
                 isLoading: false
             }
-        case actions.FETCH_POKEMON_SPECIES + '_START':
-            return {
-                ...state,
-                isLoadingSpeciesText: true
-            }
         case actions.FETCH_POKEMON_SPECIES + '_SUCCESS':
-            const { es, en } = filterSpeciesTextByLanguage(action.payload.data.flavor_text_entries, action.meta)  
+            const { es, en } = filterTextByLanguage(action.payload.data.flavor_text_entries, action.meta)  
             return {
                 ...state,
                 'esSpeciesText': es,
-                'enSpeciesText': en,
-                isLoadingSpeciesText: false
+                'enSpeciesText': en
             }
         case actions.FETCH_POKEMON_SPECIES + '_ERROR':
             return {
                 ...state,
                 errorFetch: action.payload.message,
-                isLoadingSpeciesText: false
             }
         case actions.SET_ABILITIES:
             return {
@@ -71,4 +63,4 @@ const detailsCharacters = (state = initialState, action) => {
     }
 }
 
-export default detailsCharacters;
+export default detailsCharacter;

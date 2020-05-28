@@ -18,7 +18,7 @@ export function getTypes(arrayData) {
     })
 }
 
-export function filterSpeciesTextByLanguage(entries, language, type = '') {
+export function filterTextByLanguage(entries, language, type = '') {
     const esValue = entries.find(entry => entry.language.name === 'es');
     const enValue = entries.find(entry => entry.language.name === 'en');
 
@@ -30,17 +30,4 @@ export function filterSpeciesTextByLanguage(entries, language, type = '') {
 
 function getPropertyByLanguage(type) {
     return type === 'abilities' ? 'name' : 'flavor_text'
-};
-
-async function fetchAllPokemons() {
-    try {
-        let response = await axios.get('https://pokeapi.co/api/v2/pokemon');
-        return response.data;
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-export default {
-    fetchAllPokemons
 }

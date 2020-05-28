@@ -11,10 +11,10 @@ class PokemonDetails extends Component {
         super(props);
         this.changeLanguageButton = this.changeLanguageButton.bind(this);
     }
+    
     componentDidMount() {
         const urlToGetDetails = `https://pokeapi.co/api/v2/pokemon/${this.props.match.params.Id}`;
         this.props.getPokemonDetails(urlToGetDetails, this.props.language);
-
         this.props.getPokemonSpecies(this.props.match.params.Id, this.props.language);
     }
 
@@ -28,8 +28,17 @@ class PokemonDetails extends Component {
         
         if (isLoading) {
             return(
-                <Loader />
+                <div className="page-loader-container">
+                    <Loader />
+                </div>
             );
+        }
+        if (errorFetch) {
+            return(
+                <div className="page-loader-container">
+                    {errorFetch}
+                </div>
+            )
         }
         return(
             pokemonsDetail &&
@@ -48,7 +57,7 @@ class PokemonDetails extends Component {
                         <div className="info-details">
                             <div className="tab-name">
                                 <div>
-                                    <span>{ pokemonsDetail.name.toUpperCase() }</span>
+                                    <span>{ pokemonsDetail.name ? pokemonsDetail.name.toUpperCase() : null}</span>
                                     <img src={tabCard} alt=""/>
                                 </div>
                             </div>
@@ -56,7 +65,7 @@ class PokemonDetails extends Component {
                                 <div className="col col-1">
                                     <div>
                                         <div className="large-image">
-                                            <img src={pokemonsDetail.sprites.front_default} alt=""/>
+                                            <img src={ pokemonsDetail.sprites ? pokemonsDetail.sprites.front_default : null} alt=""/>
                                         </div>
                                     </div>
                                 </div>

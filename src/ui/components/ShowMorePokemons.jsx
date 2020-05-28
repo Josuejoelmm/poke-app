@@ -4,10 +4,10 @@ import './styles/ShowMorePokemons.scss';
 
 export default function ShowMorePokemons({ showMorePokemons, nextPageUrl, prevPageUrl, isLoadingMorePokemon }) {
     function nextPage() {
-        showMorePokemons(nextPageUrl)
+        showMorePokemons(nextPageUrl);
     }
     function prevPage() {
-        showMorePokemons(prevPageUrl)
+        showMorePokemons(prevPageUrl);
     }
     if(isLoadingMorePokemon) {
         return(<Loader />);

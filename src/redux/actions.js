@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAbilities, filterSpeciesTextByLanguage, getTypes } from '../utils/utilsFunctions';
+import { getAbilities, filterTextByLanguage, getTypes } from '../utils/utilsFunctions';
 
 export const actions = {
     FETCH_ALL_POKEMON: 'FETCH_ALL_POKEMON',
@@ -35,7 +35,7 @@ export function getPokemonDetails(url, language) {
                         .then(types => {
                             const typeData = types.map(type => {
                                 return {
-                                    name: filterSpeciesTextByLanguage(type.data.names, language, 'abilities')
+                                    name: filterTextByLanguage(type.data.names, language, 'abilities')
                                 }
                             })
                             dispatch(setPokemonTypes(typeData));
@@ -45,8 +45,8 @@ export function getPokemonDetails(url, language) {
                         .then(abilities => {
                             const responseArray = abilities.map(ability => {
                                 return {
-                                    name: filterSpeciesTextByLanguage(ability.data.names, language, 'abilities'),
-                                    description: filterSpeciesTextByLanguage(ability.data.flavor_text_entries, language)
+                                    name: filterTextByLanguage(ability.data.names, language, 'abilities'),
+                                    description: filterTextByLanguage(ability.data.flavor_text_entries, language)
                                 }
                             });
                             dispatch(setPokemonAbilities(responseArray))
@@ -78,7 +78,6 @@ export function getPokemonSpecies(id, language) {
         meta: language
     }
 }
-
 
 export function changeLanguage(value) {
     return {

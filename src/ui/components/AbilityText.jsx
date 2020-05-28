@@ -1,19 +1,11 @@
 import React from 'react';
+import './styles/AbilityText.scss';
 
 export default function AbilityText({ abilityName, abilityText }) {
-    const styles = {
-        h2: {
-            margin: '0px'
-        },
-        p: {
-            margin: '0px 0px 8px 0px',
-            fontSize: '18px'
-        }
-    }
     return (
         <div>
-            <h2 style={styles.h2}>{abilityName}:</h2>
-            <p style={styles.p}>{abilityText}</p>
+            <h2 className="headline-ability">{abilityName}:</h2>
+            <p className="paragraph-ability">{abilityText}</p>
         </div>
     )
 }

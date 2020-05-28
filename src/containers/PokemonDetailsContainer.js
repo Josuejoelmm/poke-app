@@ -8,7 +8,6 @@ export default connect(
             pokemonsDetail: state.detailsCharacter.pokemonsDetail,
             errorFetch: state.detailsCharacter.errorFetch,
             isLoading: state.detailsCharacter.isLoading,
-            isLoadingSpeciesText: state.detailsCharacter.isLoadingSpeciesText,
             language: state.detailsCharacter.language,
             abilities: state.detailsCharacter.abilities,
             types: state.detailsCharacter.types,

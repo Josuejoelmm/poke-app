@@ -32,4 +32,5 @@ const PokeCard = ({ data, index, history }) => {
         </div>
     );
 }
+
 export default withRouter(PokeCard);
