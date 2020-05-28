@@ -12,20 +12,25 @@ export function getAbilities(arrayData) {
     })
 }
 
-export function getType(arrayData) {
+export function getTypes(arrayData) {
     return arrayData.map(data => {
         return axios.get(data.type.url)
     })
 }
 
 export function filterSpeciesTextByLanguage(entries, language, type = '') {
-    if (type === 'abilities') {
-        let result = entries.filter(text => text.language.name == language);
-        return result[0].name;
-    }
-    let result = entries.filter(text => text.language.name == language);
-    return result[0].flavor_text;
+    const esValue = entries.find(entry => entry.language.name === 'es');
+    const enValue = entries.find(entry => entry.language.name === 'en');
+
+    return {
+        es: esValue[getPropertyByLanguage(type)],
+        en: enValue[getPropertyByLanguage(type)]
+    };
 }
+
+function getPropertyByLanguage(type) {
+    return type === 'abilities' ? 'name' : 'flavor_text'
+};
 
 async function fetchAllPokemons() {
     try {

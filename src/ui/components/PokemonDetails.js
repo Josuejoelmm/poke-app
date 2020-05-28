@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import './styles/PokemonDetails.scss';
-import axios from 'axios';
 import tabCard from '../../images/container-logo.png';
 import languageIcon from '../../images/language-icon.png';
 import Loader from './Loader';
-import { getAbilities, filterSpeciesTextByLanguage, getType } from '../../utils/utilsFunctions';
 import Tag from './Tag';
 import AbilityText from './AbilityText';
 
@@ -14,59 +12,10 @@ class PokemonDetails extends Component {
         this.changeLanguageButton = this.changeLanguageButton.bind(this);
     }
     componentDidMount() {
-        console.log('DIDMOUNT');
-        
         const urlToGetDetails = `https://pokeapi.co/api/v2/pokemon/${this.props.match.params.Id}`;
-        this.props.getPokemonDetails(urlToGetDetails);
-        this.props.getPokemonSpecies(this.props.match.params.Id, this.props.language);
-        axios.get(urlToGetDetails)
-            .then(response => {
-                let myPromises = [
-                    ...getAbilities(response.data.abilities),
-                    ...getType(response.data.types)
-                ];
-                console.log(myPromises);
-                
-                Promise.all(getAbilities(response.data.abilities))
-                    .then(abilities => {
-                        // console.log(abilities, 'QUE TENGO');
-                        
-                        let responseArray = [];
-                        abilities.map(obj => {
-                            let dataRecord = {
-                                name: filterSpeciesTextByLanguage(obj.data.names, this.props.language, 'abilities'),
-                                description: filterSpeciesTextByLanguage(obj.data.flavor_text_entries, this.props.language)
-                            }
-                            responseArray.push(dataRecord);
-                        });
-                        this.props.getPokemonAbilities(responseArray);
-                    });
-            });
-    }
+        this.props.getPokemonDetails(urlToGetDetails, this.props.language);
 
-    componentDidUpdate(prevProps) {
-        console.log('ACTUALIIZAAAAAADOOOOOOOOOO');
-        
-        console.log(prevProps);
-        if (this.props.language !== prevProps.language) {
-            const urlToGetDetails = `https://pokeapi.co/api/v2/pokemon/${this.props.match.params.Id}`;
-            this.props.getPokemonSpecies(this.props.match.params.Id, this.props.language);
-            axios.get(urlToGetDetails)
-            .then(response => {
-                Promise.all(getAbilities(response.data.abilities))
-                    .then(abilities => {
-                        let responseArray = [];
-                        abilities.map(obj => {
-                            let dataRecord = {
-                                name: filterSpeciesTextByLanguage(obj.data.names, this.props.language, 'abilities'),
-                                description: filterSpeciesTextByLanguage(obj.data.flavor_text_entries, this.props.language)
-                            }
-                            responseArray.push(dataRecord);
-                        });
-                        this.props.getPokemonAbilities(responseArray);
-                    });
-            });
-        }
+        this.props.getPokemonSpecies(this.props.match.params.Id, this.props.language);
     }
 
     changeLanguageButton(e) {
@@ -75,23 +24,23 @@ class PokemonDetails extends Component {
     }
 
     render() {
-        const { pokemonsDetail, errorFetch, isLoading, speciesText, language, abilities } = this.props;
-
+        const { pokemonsDetail, errorFetch, isLoading, language, abilities, enSpeciesText, esSpeciesText, types } = this.props;
+        
         if (isLoading) {
             return(
                 <Loader />
             );
         }
         return(
-            Object.keys(pokemonsDetail).length &&
+            pokemonsDetail &&
                 <section className="section-details">
                     <div className="language-container">
                         <div>
                             <img src={languageIcon} alt="language"/>
                             {
                                 language === 'en' 
-                                ? <div className="language-button" onClick={(e) => this.changeLanguageButton(e)}>ES</div> 
-                                : <div className="language-button" onClick={(e) => this.changeLanguageButton(e)}>EN</div>
+                                ? <div className="language-button" onClick={this.changeLanguageButton}>ES</div> 
+                                : <div className="language-button" onClick={this.changeLanguageButton}>EN</div>
                             }
                         </div>
                     </div>
@@ -114,7 +63,7 @@ class PokemonDetails extends Component {
                                 <div className="col col-2">
                                     <div>
                                         <p className="description-text">
-                                            {speciesText}
+                                            { language === 'en' ? enSpeciesText : esSpeciesText }
                                         </p>
                                         <div className="row-type flex">
                                             <div className="col col-1">
@@ -134,12 +83,10 @@ class PokemonDetails extends Component {
                                                     <h3>{language === 'en' ? 'Type' : 'Tipo'}</h3>
                                                     <div className="type">
                                                         {
-                                                            pokemonsDetail.types.map(obj => (
+                                                            types.map(type => (
                                                                 <Tag
-                                                                    key={obj.slot}
-                                                                    bgColor={'#BF2F50'} 
-                                                                    tagText={obj.type.name}
-                                                                    url={obj.type.url}
+                                                                    key={type.name[language]}
+                                                                    tagText={type.name[language]}
                                                                 />
                                                             ))
                                                         }
@@ -149,9 +96,9 @@ class PokemonDetails extends Component {
                                                         {
                                                             abilities && abilities.map((ability, i) => (
                                                                 <Tag
-                                                                    key={`${ability.name}-${i}`}
-                                                                    bgColor={'#336699'} 
-                                                                    tagText={ability.name} 
+                                                                    key={ability.name[language]}
+                                                                    tagText={ability.name[language]}
+                                                                    className="tag-ability tag" 
                                                                 />
                                                             ))
                                                         }
@@ -165,16 +112,16 @@ class PokemonDetails extends Component {
                             {
                                 abilities && abilities.map((ability, i) =>(
                                     <AbilityText 
-                                        key={`${ability.name}-${i}`}
-                                        abilityName={ability.name} 
-                                        abilityText={ability.description}
+                                        key={ability.name[language]}
+                                        abilityName={ability.name[language]} 
+                                        abilityText={ability.description[language]}
                                     />
                                 ))
                             }
                         </div>
                     </div>
                 </section>
-        );
+        )
     };
 };
 

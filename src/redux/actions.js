@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAbilities, filterSpeciesTextByLanguage, getTypes } from '../utils/utilsFunctions';
 
 export const actions = {
     FETCH_ALL_POKEMON: 'FETCH_ALL_POKEMON',
@@ -7,6 +8,7 @@ export const actions = {
     FETCH_POKEMON_SPECIES: 'FETCH_POKEMON_SPECIES',
     SET_ABILITIES: 'SET_ABILITIES',
     CHANGE_LANGUAGE: 'CHANGE_LANGUAGE',
+    SET_TYPES: 'SET_TYPES',
 }
 
 export function getAllPokemons() {
@@ -23,10 +25,49 @@ export function showMorePokemons(PageUrl) {
     }
 }
 
-export function getPokemonDetails(url) {
+export function getPokemonDetails(url, language) {
+    return dispatch => {
+        return dispatch({
+            type: actions.FETCH_POKEMON_DETAILS,
+            payload: axios.get(url)
+                .then(response => {
+                    Promise.all(getTypes(response.data.types))
+                        .then(types => {
+                            const typeData = types.map(type => {
+                                return {
+                                    name: filterSpeciesTextByLanguage(type.data.names, language, 'abilities')
+                                }
+                            })
+                            dispatch(setPokemonTypes(typeData));
+                        })
+
+                    Promise.all(getAbilities(response.data.abilities))
+                        .then(abilities => {
+                            const responseArray = abilities.map(ability => {
+                                return {
+                                    name: filterSpeciesTextByLanguage(ability.data.names, language, 'abilities'),
+                                    description: filterSpeciesTextByLanguage(ability.data.flavor_text_entries, language)
+                                }
+                            });
+                            dispatch(setPokemonAbilities(responseArray))
+                        });
+                    return response;
+                })
+        })
+    }
+}
+
+export function setPokemonAbilities(abilities) {
     return {
-        type: actions.FETCH_POKEMON_DETAILS,
-        payload: axios.get(url)
+        type: actions.SET_ABILITIES,
+        abilities
+    }
+}
+
+export function setPokemonTypes(types) {
+    return {
+        type: actions.SET_TYPES,
+        types
     }
 }
 
@@ -38,12 +79,6 @@ export function getPokemonSpecies(id, language) {
     }
 }
 
-export function getPokemonAbilities(abilities) {
-    return {
-        type: actions.SET_ABILITIES,
-        abilities
-    }
-}
 
 export function changeLanguage(value) {
     return {

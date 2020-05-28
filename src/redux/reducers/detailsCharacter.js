@@ -2,13 +2,15 @@ import { actions } from '../actions';
 import { filterSpeciesTextByLanguage } from '../../utils/utilsFunctions';
 
 const initialState = {
-    pokemonsDetail: {},
-    speciesText: '',
+    pokemonsDetail: null,
     errorFetch: '',
     isLoading: false,
     isLoadingSpeciesText: false,
     language: 'en',
-    abilities: []
+    abilities: [],
+    esSpeciesText: null,
+    enSpeciesText: null,
+    types: []
 }
 
 const detailsCharacters = (state = initialState, action) => {
@@ -36,9 +38,11 @@ const detailsCharacters = (state = initialState, action) => {
                 isLoadingSpeciesText: true
             }
         case actions.FETCH_POKEMON_SPECIES + '_SUCCESS':
+            const { es, en } = filterSpeciesTextByLanguage(action.payload.data.flavor_text_entries, action.meta)  
             return {
                 ...state,
-                speciesText: filterSpeciesTextByLanguage(action.payload.data.flavor_text_entries, action.meta),
+                'esSpeciesText': es,
+                'enSpeciesText': en,
                 isLoadingSpeciesText: false
             }
         case actions.FETCH_POKEMON_SPECIES + '_ERROR':
@@ -51,6 +55,11 @@ const detailsCharacters = (state = initialState, action) => {
             return {
                 ...state,
                 abilities: action.abilities
+            }    
+        case actions.SET_TYPES:
+            return {
+                ...state,
+                types: action.types
             }    
         case actions.CHANGE_LANGUAGE:
             return {
